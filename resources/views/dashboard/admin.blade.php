@@ -9,6 +9,6 @@
     <h1>Welcome Admin</h1>
     <p>You have full access to manage the application.</p>
     
-    <a href="{{ route('logout') }}">Logout</a>
+    <a href="{{route('logout')}}">Logout</a>
 </body>
 </html>
