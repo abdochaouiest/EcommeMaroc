@@ -14,40 +14,45 @@ class AuthController extends Controller
     public function register(){
         return view('auth.register');
     }
-    public function registerSave(Request $request){
-        Validator::make($request ->all(),[
-            'email' => 'required|email',
-            'password' => 'required|confirmed',
-            'agreed_to_terms_and_privacy' => 'accepted',
-            'full_name' => 'required',
-            'cin' => 'sometimes|required',
-            'primary_phone' => 'required',
-            'additional_phone' => 'nullable',
-            'country' => 'nullable|string',
-            'state' => 'nullable',
-            'city' => 'nullable',
-            'zip_code' => 'nullable',
-            'address' => 'nullable',           
-        ])->validate();
+    public function registerSave(Request $request)
+{
+    $validated = Validator::make($request->all(), [
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|confirmed',
+        'agreed_to_terms_and_privacy' => 'accepted',
+        'full_name' => 'required',
+        'cin' => 'nullable',
+        'primary_phone' => 'required',
+        'additional_phone' => 'nullable',
+        'country' => 'nullable|string',
+        'state' => 'nullable|string',
+        'city' => 'nullable|string',
+        'zip_code' => 'nullable|string',
+        'address' => 'nullable|string',
+    ])->validate();
 
+    try {
         $user = User::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'agreed_to_terms_and_privacy' =>$request->filled('agreed_to_terms_and_privacy'),
+            'agreed_to_terms_and_privacy' => $request->filled('agreed_to_terms_and_privacy'),
             'full_name' => $request->full_name,
             'cin' => $request->cin,
             'primary_phone' => $request->primary_phone,
             'additional_phone' => $request->additional_phone,
-            'country' => $request->additional_phone,
+            'country' => $request->country,
             'state' => $request->state,
             'city' => $request->city,
             'zip_code' => $request->zip_code,
             'address' => $request->address,
-            'role' => $request->filled('role') ? $request->role:'user',
+            'role' => $request->filled('role') ? $request->role : 'user',
         ]);
 
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Registration successful. Please log in.');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Failed to register. Please try again later.');
     }
+}
 
         public function login(){
             return view('auth.login');
