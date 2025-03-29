@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class StatiqueController extends Controller
 {
-    public function __construct() {
-        $this->middleware('auth');
-        $this->middleware('Isadmin')->only('dashboardAdmin');
-    }
     public function dashboardAdmin(){
         return view('dashboard.admin');
     }
