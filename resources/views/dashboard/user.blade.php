@@ -13,5 +13,6 @@
     <a href="">View Orders</a>
 
     <a href="{{ route('logout') }}">Logout</a>
+    @yield('content')
 </body>
 </html>
