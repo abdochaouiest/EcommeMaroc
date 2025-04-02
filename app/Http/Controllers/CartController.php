@@ -8,17 +8,17 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
         return view('cart.index', compact('cartItems'));
-
     }
-    public function addToCart(Request $request,$productId)
+    public function addToCart(Request $request, $productId)
     {
         $cartItem = Cart::where('user_id', Auth::id())->where('product_id', $productId)->first();
 
         if ($cartItem) {
-            $cartItem->increment('quantity',$request->quantity);
+            $cartItem->increment('quantity', $request->quantity);
         } else {
             Cart::create([
                 'user_id' => Auth::id(),
