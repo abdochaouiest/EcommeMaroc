@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Order Page</title>
+    <title>Home page</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -47,23 +47,37 @@
             border-radius: 5px;
         }
         .cart {
-            margin-top: 30px;
-            padding: 15px;
-            border-radius: 10px;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-            min-width: 250px;
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            overflow-y: auto;
+            transition: right 0.3s ease-in-out;
+        }
+        .cart.show {
+            right: 0;
+        }
+        .cart h2 {
+            text-align: left;
+            color: #343a40;
         }
         .cart ul {
             list-style: none;
             padding: 0;
+            text-align: left;
         }
         .cart ul li {
-            padding: 5px;
+            padding: 10px;
             border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .btn-order {
+        .btn-order, .btn-cart {
             background: #28a745;
             color: white;
             padding: 10px;
@@ -72,29 +86,57 @@
             cursor: pointer;
             margin-top: 10px;
         }
-        .btn-order:hover {
+        .btn-order:hover, .btn-cart:hover {
             background: #218838;
+        }
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .btn-remove:hover {
+            background: #c82333;
+        }
+        .cart-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .cart-toggle:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h1>Product List</h1>
-    <a href="{{route('login')}}">login</a>
-    <a href="{{route('register')}}">register</a>
-    
+    <a href="{{route('login')}}">Login</a>
+    <a href="{{route('register')}}">Register</a>
     <input type="text" id="search" placeholder="Search products..." onkeyup="searchProducts()">
     
+    <button class="cart-toggle" onclick="toggleCart()">🛒 View Cart</button>
+
     <div class="product-container" id="products">
         @foreach($products as $product)
             <div class="product-card" data-category="{{ $product->category_id }}">
                 <img src="{{ $product->photo }}" alt="{{ $product->name }}">
                 <h3>{{ $product->name }}</h3>
                 <p>Price: {{ $product->price }} MAD</p>
-                <button class="btn-order" onclick="orderProduct('{{ $product->name }}', '{{ $product->price }}')">Order</button>
+                <form method="POST" action="{{ route('cart.add', $product->id) }}">
+                    @csrf
+                    <input type="number" name="quantity" value="1" min="1">
+                    <button type="submit" class="btn-order">Add to Cart</button>
+                </form>
             </div>
         @endforeach
     </div>
-    
+
     <script>
         function searchProducts() {
             const searchValue = document.getElementById("search").value.toLowerCase();
@@ -103,6 +145,11 @@
                 const productName = product.querySelector("h3").textContent.toLowerCase();
                 product.style.display = productName.includes(searchValue) ? "block" : "none";
             });
+        }
+
+        function toggleCart() {
+            const cart = document.getElementById("cart");
+            cart.classList.toggle("show");
         }
     </script>
 </body>

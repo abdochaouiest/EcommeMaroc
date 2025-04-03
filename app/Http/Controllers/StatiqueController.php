@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,12 +14,13 @@ class StatiqueController extends Controller
         return view('dashboard.admin');
     }
     public function dashboardUser(){
-        return view('dashboard.user');
+        $products = Product::all();
+        return view('dashboard.user',compact('products'));
     }
     public function index()
     {
         $products = Product::all();
-        return view('index.home', compact('products'));
+        return view('index.home', compact('products','cartItems'));
     }
     
     public function show($id)
