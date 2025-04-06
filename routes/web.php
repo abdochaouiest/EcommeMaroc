@@ -12,6 +12,8 @@ Route::prefix("index")->group(function(){
 });
 
 Route::get('aboutus', [StatiqueController::class, 'aboutUs'])->name('aboutus');
+Route::get('contactUs', [StatiqueController::class, 'contactUs'])->name('contactus');
+Route::get('services', [StatiqueController::class, 'services'])->name('services');
 
 Route::controller(AuthController::class)->group( function (){
     Route::get('register','register')->name('register');

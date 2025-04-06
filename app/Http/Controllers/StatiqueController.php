@@ -38,5 +38,10 @@ class StatiqueController extends Controller
     {
         return view('index.contactus');
     }
+    public function services()
+    {
+        return view('index.services');
+    }
+
 
 }
