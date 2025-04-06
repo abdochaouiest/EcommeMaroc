@@ -14,6 +14,7 @@ Route::prefix("index")->group(function(){
     Route::get('show/{id}', [StatiqueController::class, 'show'])->name('index.show');
 });
 
+Route::get('aboutus', [StatiqueController::class, 'aboutUs'])->name('aboutus');
 
 Route::controller(AuthController::class)->group( function (){
     Route::get('register','register')->name('register');

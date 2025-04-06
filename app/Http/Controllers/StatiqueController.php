@@ -29,4 +29,9 @@ class StatiqueController extends Controller
         $products = Product::all()->take(4);
         return view('index.show',compact('product','products'));
     }
+
+    public function aboutUs()
+    {
+        return view('index.aboutus');
+    }
 }
