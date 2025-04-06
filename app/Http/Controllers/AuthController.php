@@ -20,15 +20,10 @@ class AuthController extends Controller
         'email' => 'required|email|unique:users,email',
         'password' => 'required|confirmed',
         'agreed_to_terms_and_privacy' => 'accepted',
-        'full_name' => 'required',
+        'name' => 'required',
         'cin' => 'nullable',
         'primary_phone' => 'required',
         'additional_phone' => 'nullable',
-        'country' => 'nullable|string',
-        'state' => 'nullable|string',
-        'city' => 'nullable|string',
-        'zip_code' => 'nullable|string',
-        'address' => 'nullable|string',
     ])->validate();
 
     try {
@@ -36,15 +31,10 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'agreed_to_terms_and_privacy' => $request->filled('agreed_to_terms_and_privacy'),
-            'full_name' => $request->full_name,
+            'name' => $request->name,
             'cin' => $request->cin,
             'primary_phone' => $request->primary_phone,
             'additional_phone' => $request->additional_phone,
-            'country' => $request->country,
-            'state' => $request->state,
-            'city' => $request->city,
-            'zip_code' => $request->zip_code,
-            'address' => $request->address,
             'role' => $request->filled('role') ? $request->role : 'user',
         ]);
 

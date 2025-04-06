@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panier</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style>
     body {
     font-family: Arial, sans-serif;
@@ -97,7 +99,31 @@ input[type="text"] {
         <h3>Total : {{ $total }} MAD</h3>
 
         <div class="buttons">
-            <a href="" class="btn">Passer à la caisse</a>
+            <a href="{{ $cartItems->count() > 0 ? route('checkout.index') : 'javascript:void(0)' }}"
+                id="checkout-button"
+                class="btn bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Passer à la caisse
+             </a>
+             
+             @if($cartItems->count() === 0)
+                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                 <script>
+                     document.addEventListener('DOMContentLoaded', function () {
+                         const checkoutBtn = document.getElementById('checkout-button');
+                         checkoutBtn.addEventListener('click', function (e) {
+                             e.preventDefault(); // Prevent navigation
+                             Swal.fire({
+                                 icon: 'info',
+                                 title: 'Panier vide',
+                                 text: 'Ajoutez des produits avant de passer à la caisse.',
+                                 confirmButtonText: 'OK',
+                                 timer: 4000,
+                                 timerProgressBar: true
+                             });
+                         });
+                     });
+                 </script>
+             @endif
             <form action="{{ route('cart.clear') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn red">🗑️ Vider le panier</button>
