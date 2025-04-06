@@ -534,5 +534,4 @@
 		<script src="/index/js/tiny-slider.js"></script>
 		<script src="/index/js/custom.js"></script>
 	</body>
-
 </html>

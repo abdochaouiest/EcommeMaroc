@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StatiqueController;
-use App\Http\Middleware\IsAdmin;
 
 Route::get('/', [StatiqueController::class, 'index']);
 Route::prefix("index")->group(function(){
@@ -25,6 +25,12 @@ Route::middleware(['auth:sanctum'])->group(function () {// kay3ni blli ay wahed 
     Route::get('dashboard/{user}', [StatiqueController::class, 'dashboardUser'])->name('dashboard.user')->where([
         'user' => "[0-9]+"
     ]);
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+Route::put('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 });
 Route::middleware(['auth:sanctum','Isadmin'])->group(function () {//kay3ni blli khass tkoun connecté o admin bach t9der t'akhod l'accès l dashboard/admin.
     Route::get('dashboard/admin', [StatiqueController::class, 'dashboardAdmin'])->name('dashboard.admin');
