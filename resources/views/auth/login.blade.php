@@ -4,27 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-
+    <!-- Use Laravel's asset() helper for CSS -->
+    <link rel="stylesheet" href="{{ asset('Auth/style.css') }}">
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .form-group input {
+            width: calc(100% - 20px); /* Adjust width to account for padding */
+            padding: 10px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <h1>Login</h1>
-
-    <form action="{{ route('login.action') }}" method="POST">
-    @csrf
-
-
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required><br>
-
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br>
-
-        <label for="remember">Remember Me:</label>
-        <input type="checkbox" name="remember" id="remember"><br>
-
-        <button type="submit">Login</button>
-    </form>
-
-    <a href="{{ route('register') }}">Don't have an account? Register</a>
+    
+    <div class="container">
+    <h1 style="text-align: center;">Welcome Back</h1>
+    <p style="text-align: center;">Please sign in to your account</p>
+        <form id="loginForm" method="POST" action="{{ route('login') }}">
+            @csrf <!-- Laravel's CSRF protection -->
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{{ route('register') }}">Register here</a></p>
+    </div>
+    <!-- Use Laravel's asset() helper for JavaScript -->
+    <script src="{{ asset('Auth/script.js') }}"></script>
 </body>
 </html>
