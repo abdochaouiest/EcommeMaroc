@@ -1,23 +1,6 @@
 @extends('layouts.app')
 @section('title', 'About Us')
 @section('contents')
-		<!-- Start Header -->
-		<header class="site-header">
-			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-lg-4 col-6">
-						<a href="{{ url('/') }}" class="site-logo">
-							<img src="{{ asset('index/images/logo.png') }}" alt="Image" class="img-fluid">
-						</a>
-					</div>
-					<div class="col-lg-8 col-6 text-end">
-						<a href="#" class="btn btn-primary">Get A Quote</a>
-					</div>
-				</div>
-			</div>
-		</header>
-		<!-- End Header -->
-
 <!-- Start Hero Section -->
 			<div class="hero">
 				<div class="container">
