@@ -20,7 +20,7 @@ class StatiqueController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('index.home', compact('products','cartItems'));
+        return view('index.home', compact('products'));
     }
     
     public function show($id)
