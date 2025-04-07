@@ -15,9 +15,9 @@
             </li>
             <li><a class="nav-link" href="shop.html">Shop</a></li>
             <li><a class="nav-link" href="{{route('aboutus') }}">About us</a></li>
-            <li><a class="nav-link" href="services.html">Services</a></li>
+            <li><a class="nav-link" href="{{route('services') }}">Services</a></li>
             <li><a class="nav-link" href="blog.html">Blog</a></li>
-            <li><a class="nav-link" href="contact.html">Contact us</a></li>
+            <li><a class="nav-link" href="{{route('contactus') }}">Contact us</a></li>
         </ul>
 
         <div class="custom-navbar-cta ms-5">
