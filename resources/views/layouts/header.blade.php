@@ -20,14 +20,21 @@
             <li><a class="nav-link" href="{{route('contactus') }}">Contact us</a></li>
         </ul>
 
-        <div class="custom-navbar-cta ms-5">
-            <a class="btn btn-primary text-white me-2" href="{{ route('login') }}">Login</a>
-            <a class="btn btn-secondary text-white me-2" href="{{ route('register') }}">Register</a>
-        </div>
-        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-            <li><a class="nav-link" href="#"><img src="images/user.svg"></a></li>
-            <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
-        </ul>
+        @guest
+    {{-- L’utilisateur n’est PAS connecté --}}
+    <div class="custom-navbar-cta ms-5">
+        <a class="btn btn-primary text-white me-2" href="{{ route('login') }}">Login</a>
+        <a class="btn btn-secondary text-white me-2" href="{{ route('register') }}">Register</a>
+    </div>
+@endguest
+
+@auth
+    {{-- L’utilisateur EST connecté --}}
+    <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+        <li><a class="nav-link" href="#"><img src="{{ asset('images/user.svg') }}"></a></li>
+        <li><a class="nav-link" href="{{ route('cart') }}"><img src="{{ asset('images/cart.svg') }}"></a></li>
+    </ul>
+@endauth
     </div>
 </div>
     
