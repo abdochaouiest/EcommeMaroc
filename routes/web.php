@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatiqueController;
 
 Route::get('/', [StatiqueController::class, 'index'])->name('home');
@@ -26,11 +27,13 @@ Route::controller(AuthController::class)->group( function (){
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {// kay3ni blli ay wahed khaso ykoon connecté (authenticité) bach y9der ymchi l dashboard dyal user
-    Route::get('dashboard/{user}', [StatiqueController::class, 'dashboardUser'])->name('dashboard.user')->where([
-        'user' => "[0-9]+"
-    ]);
 
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profil.show');
+    Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('profil.update');
+    Route::post('/profile', [ProfileController::class, 'updatePassword'])->name('profil.updatepassword');
+    
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
 Route::put('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');

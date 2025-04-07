@@ -21,7 +21,7 @@ class User extends Authenticatable
         'email',
         'password',
         'agreed_to_terms_and_privacy',
-        'full_name',
+        'name',
         'cin',
         'primary_phone',
         'additional_phone',

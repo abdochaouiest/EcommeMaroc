@@ -90,6 +90,6 @@ class AuthController extends Controller
  
         $request->session()->invalidate();//Kaymsa7 kolchi mn session bach ma i3awdch idir access
  
-        return redirect()->route('login');//Kaydi l-user l-page dyal login bach ydir signin men jdid
+        return redirect()->route('home');//Kaydi l-user l-page dyal login bach ydir signin men jdid
     }
 }
