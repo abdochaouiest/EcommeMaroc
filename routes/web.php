@@ -6,7 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StatiqueController;
 
-Route::get('/', [StatiqueController::class, 'index']);
+Route::get('/', [StatiqueController::class, 'index'])->name('home');
 Route::prefix("index")->group(function(){
     Route::get('show/{id}', [StatiqueController::class, 'show'])->name('index.show');
 });
@@ -14,6 +14,7 @@ Route::prefix("index")->group(function(){
 Route::get('aboutus', [StatiqueController::class, 'aboutUs'])->name('aboutus');
 Route::get('contactUs', [StatiqueController::class, 'contactUs'])->name('contactus');
 Route::get('services', [StatiqueController::class, 'services'])->name('services');
+Route::get('shop', [StatiqueController::class, 'shop'])->name('shop');
 
 Route::controller(AuthController::class)->group( function (){
     Route::get('register','register')->name('register');

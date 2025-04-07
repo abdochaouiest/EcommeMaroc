@@ -72,7 +72,7 @@ class AuthController extends Controller
         if(Auth::attempt($request -> only('email','password'),$request->boolean('remember'))){
             $user = Auth::user();// Ila tconnecta b sah, kayjib les infos dial user
             if ($user->role === 'user') {
-                return redirect()->route('dashboard.user',['user'=>$user->id]);
+                return redirect()->route('home');
             } elseif ($user->role === 'admin') {
                 return redirect()->route('dashboard.admin');
             } else {
