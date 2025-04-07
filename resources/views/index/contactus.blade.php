@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'About Us')
+@section('title', 'Contact Us')
 @section('contents')
 
 	<!-- Start Hero Section -->
