@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatiqueController;
@@ -38,6 +41,29 @@ Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.a
 Route::put('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::get('/payment/success-page', function () {
+    return view('payment.success');
+})->name('payment.success');
+
+Route::get('/payment/cancel-page', function () {
+    return view('payment.cancel');
+})->name('payment.cancel');
+
+Route::get('/payment/error-page', function () {
+    return view('payment.error');
+})->name('payment.error');
+
+Route::get('/payment/form', function () {
+    return view('payment.form');
+})->name('payment.form');
+
+Route::post('/paypal/create', [PaypalController::class, 'createPayment'])->name('paypal.create');
+
+
+
 });
 Route::middleware(['auth:sanctum','Isadmin'])->group(function () {//kay3ni blli khass tkoun connecté o admin bach t9der t'akhod l'accès l dashboard/admin.
     Route::get('dashboard/admin', [StatiqueController::class, 'dashboardAdmin'])->name('dashboard.admin');

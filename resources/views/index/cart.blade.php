@@ -15,10 +15,6 @@
         </div>
     </div>
 </div>
-<!-- End Hero Section -->
-
-
-
 <div class="untree_co-section before-footer-section">
 <div class="container">
   <div class="row mb-5">
@@ -72,7 +68,6 @@
         </table>
       </div>
   </div>
-
   <div class="row">
     <div class="col-md-6">
       <div class="row mb-5">
