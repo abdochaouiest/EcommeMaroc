@@ -13,19 +13,25 @@
         <p style="text-align: center;">Sign up for your account</p>
         <form id="registerForm" method="POST" action="{{ route('register.save') }}">
             @csrf <!-- Laravel's CSRF protection -->
-            <div class="form-group" style="display: flex; gap: 10px;">
-                <div style="flex: 1;">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" id="first_name" name="first_name" required>
-                </div>
-                <div style="flex: 1;">
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" id="last_name" name="last_name" required>
-                </div>
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="cin">CIN:</label>
+                <input type="text" id="cin" name="cin" required>
+            </div>
+            <div class="form-group">
+                <label for="primary_phone">Primary Phone:</label>
+                <input type="text" id="primary_phone" name="primary_phone" required>
+            </div>
+            <div class="form-group">
+                <label for="additional_phone">Additional Phone:</label>
+                <input type="text" id="additional_phone" name="additional_phone">
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
