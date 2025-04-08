@@ -349,5 +349,5 @@
 		</div>
 		<!-- End Blog Section -->	
 
-@endsection
+	@endsection
 

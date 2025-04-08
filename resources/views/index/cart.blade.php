@@ -79,7 +79,7 @@
         <div class="col-md-6 mb-3 mb-md-0">
           <form action="{{ route('cart.clear') }}" method="POST">
             @csrf
-            <button type="submit" class="btn btn-black btn-sm btn-block">Update Cart</button>
+            <button type="submit" class="btn btn-black btn-sm btn-block">Clear Cart</button>
         </form>
           
         </div>
@@ -165,7 +165,6 @@
                             const newTotal = response.new_total;
                             $('#quantity-' + itemId).text(newQuantity);
                             $('#total-' + itemId).text(newTotal + ' MAD');
-                            $('h3').text('Total : ' + response.cart_total + ' MAD');
                         }
                     }
                 });

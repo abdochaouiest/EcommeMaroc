@@ -256,10 +256,41 @@
         </section>
     <script>
         // Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const nav = document.querySelector('nav');
+    
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenuBtn.classList.toggle('active');
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
+    }
 
+    // Profile Tab Navigation
+    const profileNavLinks = document.querySelectorAll('.profile-nav a[data-tab]');
+    const profileTabs = document.querySelectorAll('.profile-tab');
+    
+    if (profileNavLinks.length && profileTabs.length) {
+        profileNavLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links and tabs
+                profileNavLinks.forEach(link => link.classList.remove('active'));
+                profileTabs.forEach(tab => tab.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Show corresponding tab
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    }
+
+    // Checkout Step Navigation
     const nextButtons = document.querySelectorAll('.next-step');
     const prevButtons = document.querySelectorAll('.prev-step');
     const editButtons = document.querySelectorAll('.edit-button');
@@ -418,73 +449,6 @@ function updateCheckoutProgress(stepId) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Load wishlist products from the products.js script
-    // The actual loading is handled in products.js
-    
-    // Form submission handler
-    // Toggle address edit forms
-    const editAddressButtons = document.querySelectorAll('.address-card .btn:first-of-type');
-    
-    if (editAddressButtons.length) {
-        editAddressButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // In a real app, would show edit form for this address
-                alert('Edit address functionality would be implemented here.');
-            });
-        });
-    }
-    
-    // Delete address
-    const deleteAddressButtons = document.querySelectorAll('.address-card .btn-secondary');
-    
-    if (deleteAddressButtons.length) {
-        deleteAddressButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                if (confirm('Are you sure you want to delete this address?')) {
-                    // In a real app, would delete address from database
-                    const card = this.closest('.address-card');
-                    card.remove();
-                }
-            });
-        });
-    }
-    
-    // Set default address
-    const setDefaultButtons = document.querySelectorAll('.address-card .btn:nth-of-type(3)');
-    
-    if (setDefaultButtons.length) {
-        setDefaultButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove default badge from current default
-                const currentDefault = document.querySelector('.address-badge');
-                if (currentDefault) {
-                    currentDefault.remove();
-                }
-                
-                // Add default badge to this address
-                const card = this.closest('.address-card');
-                const badge = document.createElement('div');
-                badge.className = 'address-badge';
-                badge.textContent = 'Default';
-                card.prepend(badge);
-                
-                // Remove "Set as Default" button from this card
-                this.remove();
-            });
-        });
-    }
-    
-    // Add new address
-    const addAddressCard = document.querySelector('.add-address');
-    
-    if (addAddressCard) {
-        addAddressCard.addEventListener('click', function() {
-            // In a real app, would show form to add new address
-            alert('Add new address functionality would be implemented here.');
-        });
-    }
-});
 
 window.onload = function() {
         // Hide success alert after 5 seconds
