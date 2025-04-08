@@ -19,8 +19,14 @@ class StatiqueController extends Controller
     }
     public function index()
     {
-        $products = Product::all();
+        $products = Product::all()->take(3);
         return view('index.home', compact('products'));
+    }
+
+    public function shop()
+    {
+        $products = Product::all();
+        return view('index.shop', compact('products'));
     }
     
     public function show($id)
@@ -33,5 +39,13 @@ class StatiqueController extends Controller
     public function aboutUs()
     {
         return view('index.aboutus');
+    }
+    public function contactUs()
+    {
+        return view('index.contactus');
+    }
+    public function services()
+    {
+        return view('index.services');
     }
 }

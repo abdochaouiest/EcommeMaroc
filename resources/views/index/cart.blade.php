@@ -1,137 +1,139 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panier</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<style>
-    body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    text-align: center;
-}
-
-.container {
-    width: 80%;
-    background: white;
-    padding: 20px;
-    margin: 50px auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-h1 {
-    color: #333;
-}
-
-input[type="text"] {
-    width: 60%;
-    padding: 10px;
-    margin: 20px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.product-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.product {
-    background: white;
-    width: 200px;
-    margin: 15px;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.product img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-.btn {
-    display: inline-block;
-}
-</style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Add jQuery -->
-</head>
-<body>
+@extends('layouts.app')
+@section('title', 'Cart')
+@section('contents')
+<div class="hero">
     <div class="container">
-        <h1>🛒 Votre Panier</h1>
-
-        <table>
-            <tr>
-                <th>Produit</th>
-                <th>Prix</th>
-                <th>Quantité</th>
-                <th>Total</th>
-                <th>Actions</th>
-            </tr>
-            @foreach($cartItems as $item)
-            <tr id="cart-item-{{ $item->id }}">
-                <td>{{ $item->product->name }}</td>
-                <td>{{ $item->product->price }} MAD</td>
-                <td>
-                    <button class="increment" data-id="{{ $item->id }}" data-action="increment">➕</button>
-                    <span id="quantity-{{ $item->id }}">{{ $item->quantity }}</span>
-                    <button class="decrement" data-id="{{ $item->id }}" data-action="decrement">➖</button>
-                </td>
-                <td id="total-{{ $item->id }}">{{ $item->product->price * $item->quantity }} MAD</td>
-                <td>
-                    <form action="{{ route('cart.remove', $item->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">❌</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </table>
-
-        <h3>Total : {{ $total }} MAD</h3>
-
-        <div class="buttons">
-            <a href="{{ $cartItems->count() > 0 ? route('checkout.index') : 'javascript:void(0)' }}"
-                id="checkout-button"
-                class="btn bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                Passer à la caisse
-             </a>
-             
-             @if($cartItems->count() === 0)
-                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                 <script>
-                     document.addEventListener('DOMContentLoaded', function () {
-                         const checkoutBtn = document.getElementById('checkout-button');
-                         checkoutBtn.addEventListener('click', function (e) {
-                             e.preventDefault(); // Prevent navigation
-                             Swal.fire({
-                                 icon: 'info',
-                                 title: 'Panier vide',
-                                 text: 'Ajoutez des produits avant de passer à la caisse.',
-                                 confirmButtonText: 'OK',
-                                 timer: 4000,
-                                 timerProgressBar: true
-                             });
-                         });
-                     });
-                 </script>
-             @endif
-            <form action="{{ route('cart.clear') }}" method="POST">
-                @csrf
-                <button type="submit" class="btn red">🗑️ Vider le panier</button>
-            </form>
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Cart</h1>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                
+            </div>
         </div>
     </div>
+</div>
+<div class="untree_co-section before-footer-section">
+<div class="container">
+  <div class="row mb-5">
+      <div class="site-blocks-table">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="product-thumbnail">Image</th>
+              <th class="product-name">Product</th>
+              <th class="product-price">Price</th>
+              <th class="product-quantity">Quantity</th>
+              <th class="product-total">Total</th>
+              <th class="product-remove">Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if ($cartItems->count())
+            @foreach($cartItems as $item)
+                <tr id="cart-item-{{ $item->id }}">
+                    <td class="product-thumbnail">
+                        <img src="{{ $item->product->photo }}" alt="Image" class="img-fluid">
+                    </td>
+                    <td class="product-name">
+                        <h2 class="h5 text-black">{{ $item->product->name }}</h2>
+                    </td>
+                    <td>${{ $item->product->price }}</td>
+                    <td>
+                
+                      <button class="increment" data-id="{{ $item->id }}" data-action="increment" style="border: none;">+</button>
+                    <span id="quantity-{{ $item->id }}">{{ $item->quantity }}</span>
+                    <button class="decrement" data-id="{{ $item->id }}" data-action="decrement" style="border: none;">-</button>
+                    </td>
+                    <td id="total-{{ $item->id }}">${{ $item->product->price * $item->quantity }}</td>
+                    <td>
+                      <form action="{{ route('cart.remove', $item->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" style="border: none;">X</button>
+                    </form>
+                    </td>
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="6" class="text-center text-muted py-5">
+                    Your cart is empty.
+                </td>
+            </tr>
+        @endif
+          </tbody>
+        </table>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row mb-5">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <form action="{{ route('cart.clear') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-black btn-sm btn-block">Clear Cart</button>
+        </form>
+          
+        </div>
+        <div class="col-md-6">
+          <a href="{{ route('shop') }}" class="btn btn-outline-black btn-sm btn-block">
+            Continue Shopping
+        </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="text-black h4" for="coupon">Coupon</label>
+          <p>Enter your coupon code if you have one.</p>
+        </div>
+        <div class="col-md-8 mb-3 mb-md-0">
+          <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-black">Apply Coupon</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 pl-5">
+      <div class="row justify-content-end">
+        <div class="col-md-7">
+          <div class="row">
+            <div class="col-md-12 text-right border-bottom mb-5">
+              <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <span class="text-black">Subtotal</span>
+            </div>
+            <div class="col-md-6 text-right">
+              <strong class="text-black">$230.00</strong>
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col-md-6">
+              <span class="text-black">Total</span>
+            </div>
+            <div class="col-md-6 text-right">
+              <strong class="text-black">$230.00</strong>
+            </div>
+          </div>
 
-    <script>
+          <div class="row">
+            <div class="col-md-12">
+              <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='checkout.html'">Proceed To Checkout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
         $(document).ready(function() {
             $('.increment').on('click', function() {
                 const itemId = $(this).data('id');
@@ -158,12 +160,12 @@ input[type="text"] {
                             const newTotal = response.new_total;
                             $('#quantity-' + itemId).text(newQuantity);
                             $('#total-' + itemId).text(newTotal + ' MAD');
-                            $('h3').text('Total : ' + response.cart_total + ' MAD');
                         }
                     }
                 });
             }
         });
-    </script>
-</body>
-</html>
+</script>
+
+
+@endsection

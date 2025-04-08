@@ -30,7 +30,7 @@
     <div class="container">
     <h1 style="text-align: center;">Welcome Back</h1>
     <p style="text-align: center;">Please sign in to your account</p>
-        <form id="loginForm" method="POST" action="{{ route('login') }}">
+        <form id="loginForm" method="POST" action="{{ route('login.action') }}">
             @csrf <!-- Laravel's CSRF protection -->
             <div class="form-group">
                 <label for="email">Email:</label>
@@ -44,7 +44,7 @@
         </form>
         <p>Don't have an account? <a href="{{ route('register') }}">Register here</a></p>
     </div>
-    <!-- Use Laravel's asset() helper for JavaScript -->
-    <script src="{{ asset('Auth/script.js') }}"></script>
+
+    {{-- <script src="{{ asset('Auth/script.js') }}"></script> --}}
 </body>
 </html>

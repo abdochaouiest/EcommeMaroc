@@ -62,7 +62,7 @@ class AuthController extends Controller
         if(Auth::attempt($request -> only('email','password'),$request->boolean('remember'))){
             $user = Auth::user();// Ila tconnecta b sah, kayjib les infos dial user
             if ($user->role === 'user') {
-                return redirect()->route('dashboard.user',['user'=>$user->id]);
+                return redirect()->route('home');
             } elseif ($user->role === 'admin') {
                 return redirect()->route('dashboard.admin');
             } else {
@@ -80,6 +80,6 @@ class AuthController extends Controller
  
         $request->session()->invalidate();//Kaymsa7 kolchi mn session bach ma i3awdch idir access
  
-        return redirect()->route('login');//Kaydi l-user l-page dyal login bach ydir signin men jdid
+        return redirect()->route('home');//Kaydi l-user l-page dyal login bach ydir signin men jdid
     }
 }

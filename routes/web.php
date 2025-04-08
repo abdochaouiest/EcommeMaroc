@@ -7,14 +7,18 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatiqueController;
 
-Route::get('/', [StatiqueController::class, 'index']);
+Route::get('/', [StatiqueController::class, 'index'])->name('home');
 Route::prefix("index")->group(function(){
     Route::get('show/{id}', [StatiqueController::class, 'show'])->name('index.show');
 });
 
 Route::get('aboutus', [StatiqueController::class, 'aboutUs'])->name('aboutus');
+Route::get('contactUs', [StatiqueController::class, 'contactUs'])->name('contactus');
+Route::get('services', [StatiqueController::class, 'services'])->name('services');
+Route::get('shop', [StatiqueController::class, 'shop'])->name('shop');
 
 Route::controller(AuthController::class)->group( function (){
     Route::get('register','register')->name('register');
@@ -26,9 +30,13 @@ Route::controller(AuthController::class)->group( function (){
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {// kay3ni blli ay wahed khaso ykoon connecté (authenticité) bach y9der ymchi l dashboard dyal user
-    Route::get('dashboard', [StatiqueController::class, 'dashboardUser'])->name('dashboard.user');
 
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profil.show');
+    Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('profil.update');
+    Route::post('/profile', [ProfileController::class, 'updatePassword'])->name('profil.updatepassword');
+    
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
 Route::put('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');

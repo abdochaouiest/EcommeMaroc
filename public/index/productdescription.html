@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="favicon.png">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Premium Leather Backpack - Furni</title>
+  
+  <style>
+    .product-detail-img {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .product-thumbnail {
+      width: 80px;
+      height: 80px;
+      border-radius: 4px;
+      margin-right: 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      object-fit: cover;
+    }
+    
+    .product-thumbnail.active {
+      border-color: #3b5d50;
+    }
+    
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .quantity-btn {
+      width: 40px;
+      height: 40px;
+      background-color: #f9f9f9;
+      border: 1px solid #e5e5e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    .quantity-input {
+      width: 60px;
+      height: 40px;
+      border: 1px solid #e5e5e5;
+      margin: 0 5px;
+      text-align: center;
+    }
+    
+    .back-to-shop {
+      display: inline-flex;
+      align-items: center;
+      color: #3b5d50;
+      text-decoration: none;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    
+    .back-to-shop:hover {
+      color: #2d4a3e;
+    }
+    
+    .product-details-section {
+      padding: 80px 0;
+    }
+    
+    .wishlist-btn {
+      background: none;
+      border: 1px solid #e5e5e5;
+      width: 50px;
+      height: 50px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .wishlist-btn:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .heart-icon {
+      color: #6c757d;
+      font-size: 20px;
+    }
+    
+    .heart-icon.filled {
+      color: #ff4057;
+    }
+    
+    .details-section {
+      border-top: 1px solid #e5e5e5;
+      padding-top: 30px;
+      margin-top: 30px;
+    }
+  </style>
+  <!-- Start Hero Section -->
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5">
+          <div class="intro-excerpt">
+            <h1>Premium Leather Backpack</h1>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <!-- Start Product Detail Section -->
+  <div class="product-details-section">
+    <div class="container">
+      <a href="shop.html" class="back-to-shop">
+        <i class="fa fa-chevron-left me-2"></i> Back to Products
+      </a>
+      
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="product-detail-img mb-4">
+            <img src="../images/product-1.png" alt="Premium Leather Backpack" class="img-fluid" id="mainImage">
+          </div>
+        </div>
+        
+        <div class="col-lg-6">
+          <div class="ps-lg-4">
+            <span class="d-block text-secondary text-uppercase mb-2">ACCESSORIES</span>
+            <h2 class="mb-4">Premium Leather Backpack</h2>
+            <p class="h4 mb-4">$149.99</p>
+            
+            <p class="mb-4">Handcrafted leather backpack with ample storage space and premium finishes. Made from full-grain leather that ages beautifully over time, this backpack features multiple compartments including a padded laptop sleeve, water bottle pockets, and hidden security pockets. The adjustable straps are padded for comfort during extended wear. Perfect for daily commutes, travel, or weekend adventures.</p>
+            
+            <div class="quantity-selector mb-4">
+              <label class="form-label">Quantity</label>
+              <div class="quantity-controls">
+                <button class="quantity-btn" onclick="decrementQuantity()">-</button>
+                <input type="number" class="quantity-input" id="quantity" value="1" min="1">
+                <button class="quantity-btn" onclick="incrementQuantity()">+</button>
+              </div>
+            </div>
+            
+            <div class="d-flex mb-4">
+              <button class="btn btn-primary py-3 px-4 me-3" onclick="addToCart()">
+                <i class="fa fa-shopping-cart me-2"></i> Add to Cart
+              </button>
+              <button class="wishlist-btn" onclick="toggleWishlist()">
+                <i class="fa fa-heart heart-icon" id="wishlistIcon"></i>
+              </button>
+            </div>
+            
+            <div class="details-section">
+              <div class="row mb-3">
+                <div class="col-md-3">
+                  <strong>Shipping</strong>
+                </div>
+                <div class="col-md-9">
+                  Free shipping on orders over $50. Estimated delivery: 3-5 business days.
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-3">
+                  <strong>Returns</strong>
+                </div>
+                <div class="col-md-9">
+                  30-day return policy. See our <a href="#">return policy</a> for more details.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Product Detail Section -->
+
+  
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+  
+  <script>
+    function changeImage(src, thumbnail) {
+      document.getElementById('mainImage').src = src;
+      
+      // Remove active class from all thumbnails
+      const thumbnails = document.querySelectorAll('.product-thumbnail');
+      thumbnails.forEach(thumb => {
+        thumb.classList.remove('active');
+      });
+      
+      // Add active class to the clicked thumbnail
+      thumbnail.classList.add('active');
+    }
+    
+    function incrementQuantity() {
+      const quantityInput = document.getElementById('quantity');
+      quantityInput.value = parseInt(quantityInput.value) + 1;
+    }
+    
+    function decrementQuantity() {
+      const quantityInput = document.getElementById('quantity');
+      if (parseInt(quantityInput.value) > 1) {
+        quantityInput.value = parseInt(quantityInput.value) - 1;
+      }
+    }
+    
+    function addToCart() {
+      const quantity = document.getElementById('quantity').value;
+      alert(`Added ${quantity} Premium Leather Backpack(s) to your cart!`);
+      // Here you would normally handle the cart logic with AJAX or form submission
+    }
+    
+    function toggleWishlist() {
+      const wishlistIcon = document.getElementById('wishlistIcon');
+      wishlistIcon.classList.toggle('filled');
+      
+      if (wishlistIcon.classList.contains('filled')) {
+        alert('Added to your wishlist!');
+      } else {
+        alert('Removed from your wishlist!');
+      }
+      // Here you would normally handle the wishlist logic with AJAX
+    }
+  </script>
+</body>
+</html>
