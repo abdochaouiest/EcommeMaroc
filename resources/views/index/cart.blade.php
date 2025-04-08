@@ -47,16 +47,16 @@
                     <td>${{ $item->product->price }}</td>
                     <td>
                 
-                      <button class="increment" data-id="{{ $item->id }}" data-action="increment">+</button>
+                      <button class="increment" data-id="{{ $item->id }}" data-action="increment" style="border: none;">+</button>
                     <span id="quantity-{{ $item->id }}">{{ $item->quantity }}</span>
-                    <button class="decrement" data-id="{{ $item->id }}" data-action="decrement">-</button>
+                    <button class="decrement" data-id="{{ $item->id }}" data-action="decrement" style="border: none;">-</button>
                     </td>
                     <td id="total-{{ $item->id }}">${{ $item->product->price * $item->quantity }}</td>
                     <td>
                       <form action="{{ route('cart.remove', $item->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit">X</button>
+                        <button type="submit" style="border: none;">X</button>
                     </form>
                     </td>
                 </tr>
