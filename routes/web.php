@@ -42,6 +42,8 @@ Route::put('/cart/update', [CartController::class, 'update'])->name('cart.update
 Route::delete('/cart/remove/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 
+Route::get('/product/{id}', [ProductController::class, 'showUser'])->name('product.showuser');
+
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::get('/payment/success-page', function () {
