@@ -27,7 +27,7 @@
                     @if ($products->count())
                     @foreach ( $products as $prod)
 					<div class="col-12 col-md-4 col-lg-3 mb-5">
-						<a class="product-item" href="{{ route('product.show', $prod->id) }}">
+						<a class="product-item" href="{{ route('product.showuser', $prod->id) }}">
 							<img src="{{ $prod->photo }}" class="img-fluid product-thumbnail">
 							<h3 class="product-title">{{$prod->name}}</h3>
 							<strong class="product-price">${{$prod->price}}</strong>
