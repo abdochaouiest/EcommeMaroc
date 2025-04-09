@@ -4,30 +4,57 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Illuminate\Support\Str;
 use App\Models\Cart;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PayPalController extends Controller
 {
-    public function createPayment()
+    public function createPayment(Request $request)
     {
         $user = Auth::user();
         $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
 
         if ($cartItems->isEmpty()) {
-            return redirect()->back()->with('error', 'Your cart is empty');
+            return redirect()->route("home");
         }
 
-        // Calculate total
         $subtotal = $cartItems->sum(function ($item) {
             return $item->quantity * $item->product->price;
         });
         $shipping = 10;
         $tax = $subtotal * 0.08;
         $total = $subtotal + $shipping + $tax;
+
+        session([
+            'order_data' => [
+                'user_id' => $user->id,
+                'subtotal' => $subtotal,
+                'discount' => 0,
+                'shipping_cost' => $shipping,
+                'tax' => $tax,
+                'total' => $total,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'country' => $request->country ?? 'Maroc',
+                'zip' => $request->zip,
+                'type' => $request->type ?? 'home',
+                'payment_method' => 'paypal',
+                'payment_status' => 'pending',
+                'status' => 'ordered',
+                'cart_items' => $cartItems->map(function($item) {
+                    return [
+                        'product_id' => $item->product_id,
+                        'quantity' => $item->quantity,
+                        'price' => $item->product->price
+                    ];
+                })->toArray()
+            ]
+        ]);
 
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
@@ -36,8 +63,8 @@ class PayPalController extends Controller
         $response = $provider->createOrder([
             "intent" => "CAPTURE",
             "application_context" => [
-                "return_url" => route('payment.success'),
-                "cancel_url" => route('payment.cancel'),
+                "return_url" => route('paypal.success'),
+                "cancel_url" => route('paypal.cancel'),
             ],
             "purchase_units" => [
                 [
@@ -76,48 +103,8 @@ class PayPalController extends Controller
         ]);
         
         if (isset($response['id']) && $response['id'] != null) {
-            // Store cart and order details in session
-            session([
-                'paypal_order_id' => $response['id'],
-                'cart_items' => $cartItems,
-                'order_total' => $total,
-                'order_subtotal' => $subtotal,
-                'order_shipping' => $shipping,
-                'order_tax' => $tax
-            ]);
-
-            $order = Order::create([
-                'user_id' => $user->id,
-                'order_number' => 'ORD-' . Str::upper(Str::random(8)),
-                'status' => 'processing',
-                'subtotal' => session('order_subtotal'),
-                'shipping_cost' => session('order_shipping'),
-                'tax' => session('order_tax'),
-                'total' => session('order_total'),
-                'payment_method' => 'paypal',
-                'payment_status' => 'paid',
-                'paypal_payment_id' => $response['id'],
-                'shipping_address_id' => 2
-            ]);
-    
-            foreach ($cartItems as $item) {
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_id' => $item->product_id,
-                    'quantity' => $item->quantity,
-                    'price' => $item->product->price
-                ]);
-            }
-    
-            // Clear cart and session
-            Cart::where('user_id', $user->id)->delete();
-            session()->forget([
-                'paypal_order_id',
-                'order_total',
-                'order_subtotal',
-                'order_shipping',
-                'order_tax'
-            ]);            
+            session(['paypal_payment_id' => $response['id']]);
+            
             foreach ($response['links'] as $link) {
                 if ($link['rel'] === 'approve') {
                     return redirect()->away($link['href']);
@@ -131,87 +118,71 @@ class PayPalController extends Controller
             
     }
     
-    public function success()
+    public function handleSuccess(Request $request)
     {
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
         
-        $paypalOrderId = session('paypal_order_id');
+        $paypalOrderId = session('paypal_payment_id');
+        $orderData = session('order_data');
         
-        if (empty($paypalOrderId)) {
+        if (empty($paypalOrderId) || empty($orderData)) {
             return redirect()->route('cart.index')
                 ->with('error', 'Session data missing');
         }
     
         $response = $provider->capturePaymentOrder($paypalOrderId);
 
-        if (isset($response['status']) && in_array($response['status'], ['FAILED', 'CANCELLED'])) {
-            return redirect()->route('payment.error')
-                ->with('error', 'Payment failed or was cancelled');
-        }
-    
-            // Reload cart items from DB (not session)
-            $user = Auth::user();
-            $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
-    
-            // Proceed only if cart is not empty
-            if ($cartItems->isEmpty()) {
-                return redirect()->route('cart.index')->with('error', 'Your cart is empty');
-            }
+        if (isset($response['status']) && $response['status'] === 'COMPLETED') {
             $order = Order::create([
-                'user_id' => $user->id,
-                'order_number' => 'ORD-' . Str::upper(Str::random(8)),
-                'status' => 'processing',
-                'subtotal' => session('order_subtotal'),
-                'shipping_cost' => session('order_shipping'),
-                'tax' => session('order_tax'),
-                'total' => session('order_total'),
+                'user_id' => $orderData['user_id'],
+                'order_number' => 'ORD-' . strtoupper(Str::random(8)),
+                'subtotal' => $orderData['subtotal'],
+                'discount' => $orderData['discount'],
+                'shipping_cost' => $orderData['shipping_cost'],
+                'tax' => $orderData['tax'],
+                'total' => $orderData['total'],
+                'phone' => $orderData['phone'],
+                'address' => $orderData['address'],
+                'city' => $orderData['city'],
+                'state' => $orderData['state'],
+                'country' => $orderData['country'],
+                'zip' => $orderData['zip'],
+                'type' => $orderData['type'],
                 'payment_method' => 'paypal',
-                'payment_status' => 'paid',
+                'payment_status' => 'completed',
                 'paypal_payment_id' => $response['id'],
-                'shipping_address_id' => 2
+                'status' => 'processing'
             ]);
     
-            foreach ($cartItems as $item) {
+            foreach ($orderData['cart_items'] as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
-                    'product_id' => $item->product_id,
-                    'quantity' => $item->quantity,
-                    'price' => $item->product->price
+                    'product_id' => $item['product_id'],
+                    'quantity' => $item['quantity'],
+                    'price' => $item['price']
                 ]);
             }
     
-            // Clear cart and session
-            Cart::where('user_id', $user->id)->delete();
-            session()->forget([
-                'paypal_order_id',
-                'order_total',
-                'order_subtotal',
-                'order_shipping',
-                'order_tax'
-            ]);
+            Cart::where('user_id', $orderData['user_id'])->delete();
+            session()->forget(['paypal_payment_id', 'order_data']);
     
-    
-            
-            return redirect()->route('payment.success', $order->id)
-                ->with('success', 'Payment completed successfully!');
-    
+            return redirect()->route('order.confirmation', ['order' => $order->id])
+                    ->with('success', 'Payment completed successfully!');
         
+            
+        }
+
+        return redirect()->route('payment.error')
+            ->with('error', 'Payment failed or could not be verified');
+
+       
     }
     
-    public function cancel()
+    public function handleCancel()
     {
-        // Clear session
-        session()->forget([
-            'paypal_order_id',
-            'cart_items',
-            'order_total',
-            'order_subtotal',
-            'order_shipping',
-            'order_tax'
-        ]);
-        
+        session()->forget(['paypal_payment_id', 'order_data']);
         return redirect()->route('payment.cancel')
             ->with('error', 'Payment was cancelled');
     }

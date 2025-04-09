@@ -22,6 +22,22 @@
 
 		<div class="untree_co-section product-section before-footer-section">
 		    <div class="container">
+				<div class="orders-filters">
+                    <div class="orders-search">
+                        <input type="text" placeholder="Search orders...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="orders-filter">
+                        <label for="order-status">Filter by Status:</label>
+                        <select id="order-status">
+                            <option value="all">All Orders</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
 		      	<div class="row">
 
                     @if ($products->count())

@@ -12,7 +12,7 @@
                         An error occurred during the payment process.
                     </div>
                     <p>{{ session('error') ?? 'Something went wrong with your payment. Please try again or contact support if the problem persists.' }}</p>
-                    <a href="{{ route('payment.form') }}" class="btn btn-primary">Try Again</a>
+                    <a href="" class="btn btn-primary">Try Again</a>
                     <a href="/" class="btn btn-secondary">Return to Home</a>
                 </div>
             </div>

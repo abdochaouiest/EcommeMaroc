@@ -17,10 +17,16 @@ return new class extends Migration
             $table->string('order_number')->unique();
             $table->enum('status', ['pending', 'processing', 'completed', 'cancelled', 'refunded'])->default('pending');  
             $table->decimal('subtotal', 10, 2);
+            $table->decimal('discount')->default(0); 
             $table->decimal('shipping_cost', 10, 2);
             $table->decimal('tax', 10, 2);
             $table->decimal('total', 10, 2);
-            $table->foreignId('shipping_address_id')->nullable()->constrained('addresses')->onDelete('restrict');
+            $table->text('address'); 
+            $table->string('city'); 
+            $table->string('state'); 
+            $table->string('country'); 
+            $table->string('zip'); 
+            $table->string('type')->default('home'); 
             $table->string('paypal_payment_id')->nullable();
             $table->string('payment_method');
             $table->string('payment_status')->nullable();

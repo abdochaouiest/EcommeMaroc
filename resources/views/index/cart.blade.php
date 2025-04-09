@@ -7,6 +7,8 @@
             <div class="col-lg-5">
                 <div class="intro-excerpt">
                     <h1>Cart</h1>
+                    <p class="mb-4">{{ auth()->user()->name }}! Your cart is waiting for you. You have {{ count($cartItems) }} item(s) in your cart. Ready to proceed to checkout?</p>
+                    <p><a href="{{route("shop")}}" class="btn btn-secondary me-2">< Back To Shop</a></p>
                 </div>
             </div>
             <div class="col-lg-7">
@@ -105,26 +107,20 @@
               <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
             </div>
           </div>
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <span class="text-black">Subtotal</span>
-            </div>
-            <div class="col-md-6 text-right">
-              <strong class="text-black">$230.00</strong>
-            </div>
-          </div>
           <div class="row mb-5">
             <div class="col-md-6">
               <span class="text-black">Total</span>
             </div>
             <div class="col-md-6 text-right">
-              <strong class="text-black">$230.00</strong>
+              <strong class="text-black" id="cart-total">${{ number_format($total, 2) }}</strong>
             </div>
           </div>
 
           <div class="row">
             <div class="col-md-12">
-              <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='checkout.html'">Proceed To Checkout</button>
+              <a href="{{ route('checkout.index') }}" class="btn btn-black btn-lg py-3 btn-block">
+                Proceed To Checkout
+              </a>
             </div>
           </div>
         </div>
@@ -158,8 +154,11 @@
                         if (response.success) {
                             const newQuantity = response.new_quantity;
                             const newTotal = response.new_total;
+                            const cart_total = response.cart_total;
                             $('#quantity-' + itemId).text(newQuantity);
                             $('#total-' + itemId).text(newTotal + ' MAD');
+                            $('#cart-total').text(newTotal + ' MAD');
+                            toastr.success('Cart updated successfully');
                         }
                     }
                 });

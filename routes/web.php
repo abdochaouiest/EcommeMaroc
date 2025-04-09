@@ -46,25 +46,27 @@ Route::get('/product/{id}', [ProductController::class, 'showUser'])->name('produ
 
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-Route::get('/payment/success-page', function () {
-    return view('payment.success');
-})->name('payment.success');
+Route::get('/paypal/success', [PayPalController::class, 'handleSuccess'])
+            ->name('paypal.success');
 
-Route::get('/payment/cancel-page', function () {
-    return view('payment.cancel');
-})->name('payment.cancel');
+Route::get('/paypal/cancel', [PayPalController::class, 'handleCancel'])
+            ->name('paypal.cancel');
+Route::get('/payment/error', function () {
+                return view('payment.error')->with('error', session('error'));
+            })->name('payment.error');
 
-Route::get('/payment/error-page', function () {
-    return view('payment.error');
-})->name('payment.error');
 
-Route::get('/payment/form', function () {
-    return view('payment.form');
-})->name('payment.form');
+Route::get('/order/confirmation/{order}', function ($order) {
+    return view('payment.orderconfirmation', [
+        'order' => $order,
+        'success' => session('success')
+    ]);
+})->name('order.confirmation');
 
 Route::post('/paypal/create', [PaypalController::class, 'createPayment'])->name('paypal.create');
 
-
+Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 
 });
 Route::middleware(['auth:sanctum','Isadmin'])->group(function () {//kay3ni blli khass tkoun connecté o admin bach t9der t'akhod l'accès l dashboard/admin.

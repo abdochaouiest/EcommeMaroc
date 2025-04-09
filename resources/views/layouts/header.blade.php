@@ -1,7 +1,7 @@
 <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
         <div class="container">
-            <a class="navbar-brand" href="index.html">EcommeMaroc<span>.</span></a>
+            <a class="navbar-brand" href="{{ route('home') }}">Glissa<span>.</span></a>
         
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -39,11 +39,11 @@
         @auth
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5 header-icons ">
                 <li ><a href="{{ route('profil.show') }}" class="nav-link" title="My Profile"><i class="fas fa-user"></i></a></li>
-                <li><a href="" class="nav-link" title="My Orders"><i class="fas fa-box"></i></a></li>
+                <li><a href="{{ route('orders') }}" class="nav-link" title="My Orders"><i class="fas fa-box"></i></a></li>
             <li>
                 <a href="{{ route('cart.index') }}" class="cart-icon nav-link" title="Shopping Cart">
                     <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">0</span>
+                    <span class="cart-count">{{$cartCount}}</span>
                 </a>
             </li>
             </ul>

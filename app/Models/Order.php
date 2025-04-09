@@ -14,13 +14,21 @@ class Order extends Model
         'order_number',
         'status',
         'subtotal',
+        'discount',
         'shipping_cost',
         'tax',
         'total',
-        'shipping_address_id',
+        'locality',
+        'address',
+        'city',
+        'state',
+        'country',
+        'zip',
+        'type',
+        'paypal_payment_id',
         'payment_method',
         'payment_status',
-        'paypal_payment_id' 
+        'delivered_date',
     ];
 
     protected $casts = [
