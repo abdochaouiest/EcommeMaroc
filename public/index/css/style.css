@@ -769,3 +769,51 @@ textarea {
     .alert.hide {
         opacity: 0;
     }
+    .orders-section {
+      padding: 2rem 0;
+    }
+    
+    .orders-filters {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .orders-search {
+      display: flex;
+      width: 300px;
+    }
+    
+    .orders-search input {
+      flex-grow: 1;
+      padding: 0.5rem 1rem;
+      border: 1px solid #cbd5e1;
+      border-right: none;
+      border-radius: 0.375rem 0 0 0.375rem;
+    }
+    
+    .orders-search button {
+      padding: 0.5rem 1rem;
+      background-color: #3b5d50;
+      color: white;
+      border: none;
+      border-radius: 0 0.375rem 0.375rem 0;
+      cursor: pointer;
+    }
+    
+    .orders-filter {
+      display: flex;
+      align-items: center;
+    }
+    
+    .orders-filter label {
+      margin-right: 0.5rem;
+    }
+    
+    .orders-filter select {
+      padding: 0.5rem;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--border-radius);
+    }
