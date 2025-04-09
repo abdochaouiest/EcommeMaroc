@@ -1,22 +1,23 @@
 @extends('layouts.app')
 @section('title', 'Shop')
 @section('contents')
-<!-- Start Hero Section -->
 <div class="hero">
 				<div class="container">
 					<div class="row justify-content-between">
 						<div class="col-lg-5">
 							<div class="intro-excerpt">
 								<h1>Shop</h1>
+                  <p class="mb-4">Welcome back, {{ auth()->user()->name }}! Explore our latest products and find something you love.</p>
 							</div>
 						</div>
 						<div class="col-lg-7">
-							
+							<div class="hero-img-wrap">
+								<img src="images/product-6.png" class="img-fluid">
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		<!-- End Hero Section -->
 
 		
 

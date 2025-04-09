@@ -26,25 +26,16 @@
       </div>
     </div>
   </div>
-  <!-- End Hero Section -->
-
-  <!-- Start Product Detail Section -->
   <div class="product-details-section">
-    <div class="container">
-      <a href="{{ route('shop') }}" class="back-to-shop">
-        <i class="fa fa-chevron-left me-2"></i> Back to Products
-      </a>
-      
+    <div class="container">   
       <div class="row">
         <div class="col-lg-6">
           <div class="product-detail-img mb-4">
             <img src="{{$product->photo}}" alt="Premium Leather Backpack" class="img-fluid" id="mainImage">
           </div>
         </div>
-        
         <div class="col-lg-6">
           <div class="ps-lg-4">
-            <span class="d-block text-secondary text-uppercase mb-2">ACCESSORIES</span>
             <h2 class="mb-4">{{$product->name}}</h2>
             <p class="h4 mb-4">${{$product->price}}</p>
             
@@ -67,10 +58,6 @@
                     <i class="fa fa-shopping-cart me-2"></i> Add to Cart
                 </button>
               </form>
-
-              <button class="wishlist-btn" onclick="toggleWishlist()">
-                <i class="fa fa-heart heart-icon" id="wishlistIcon"></i>
-              </button>
             </div>
 
             
@@ -135,17 +122,6 @@
       hiddenQuantity.value = quantityInput.value;
     }
   }
-      
-    function toggleWishlist() {
-      const wishlistIcon = document.getElementById('wishlistIcon');
-      wishlistIcon.classList.toggle('filled');
-      
-      if (wishlistIcon.classList.contains('filled')) {
-        alert('Added to your wishlist!');
-      } else {
-        alert('Removed from your wishlist!');
-      }
-    }
     setTimeout(function() {
     const message = document.getElementById('message');
     if (message) {

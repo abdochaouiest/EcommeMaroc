@@ -610,7 +610,7 @@ a {
       border-radius: 10px !important; }
   .footer-section .sofa-img {
     position: absolute;
-    top: -200px;
+    top: -100px;
     z-index: 1;
     right: 0; }
     .footer-section .sofa-img img {
@@ -824,15 +824,6 @@ textarea {
     overflow: hidden;
   }
   
-  .product-thumbnail {
-    width: 80px;
-    height: 80px;
-    border-radius: 4px;
-    margin-right: 10px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    object-fit: cover;
-  }
   
   .product-thumbnail.active {
     border-color: #3b5d50;
