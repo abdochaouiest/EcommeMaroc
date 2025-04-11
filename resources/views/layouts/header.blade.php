@@ -21,9 +21,6 @@
                     <li class="nav-item {{ Request::routeIs('services') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('services') }}">Services</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="blog.html">Blog</a>
-                    </li>
                     <li class="nav-item {{ Request::routeIs('contactus') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('contactus') }}">Contact us</a>
                     </li>
