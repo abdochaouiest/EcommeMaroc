@@ -157,9 +157,28 @@
                     </table>
                 </div>
             </section>
-
-            <section id="orders-section" class="content-section">
-                <h1>Orders</h1>
+            
+                <section id="orders-section" class="content-section">
+                    <h1>Orders</h1>
+                    
+                        <div class="orders-filters">
+                            <div class="orders-search">
+                                <input type="text" id="search-input" name="search" placeholder="Search by order number...">
+                                       <button onclick="filterOrders()"><i class="fas fa-search"></i></button>
+                            </div>
+                            <div class="orders-filter">
+                                <label for="order-status">Filter by Status:</label>
+                                <select id="status-select" onchange="filterOrders()">
+                                    <option value="all">All Orders</option>
+                                    <option value="processing">Processing</option>
+                                    <option value="shipped">Shipped</option>
+                                    <option value="delivered">Delivered</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                        
+                        </div>
+            
                 <div class="orders-table-wrapper">
                     <table class="data-table">
                         <thead>
@@ -174,33 +193,35 @@
                         </thead>
                         <tbody>
                             @if($orders->count() > 0)
-    @foreach ($orders as $order)
-        <tr>
-            <td>{{ $order->order_number }}</td>
-            <td>{{ $order->user->name }}</td>
-            <td>{{ $order->created_at->format('F j, Y') }}</td>
-            <td>${{ number_format($order->total, 2) }}</td>
-            <td>
-                <span class="status-badge {{ $order->status }}">
-                    {{ ucfirst($order->status) }}
-                </span>
-            </td>
-            <td>
-                <button class="action-btn view-btn" data-order-id="{{ $order->id }}">
-                    <i class="fas fa-eye"></i>
-                </button>
-                <button class="action-btn edit-btn">
-                    <i class="fas fa-edit"></i>
-                </button>
-            </td>
-        </tr>
-    @endforeach
-@else
-    <tr>
-        <td colspan="6" class="text-center">Aucun order</td>
-    </tr>
-@endif
+                                @foreach ($orders as $order)
+                                    <tr class="order-row"
+                                    data-order-number="{{ strtolower($order->order_number) }}"
+                                    data-order-status="{{ strtolower($order->status) }}">
+                                        <td>{{ $order->order_number }}</td>
+                                        <td>{{ $order->user->name }}</td>
+                                        <td>{{ $order->created_at->format('F j, Y') }}</td>
+                                        <td>${{ number_format($order->total, 2) }}</td>
+                                        <td>
+                                            <span class="status-badge {{ $order->status }}">
+                                                {{ ucfirst($order->status) }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a class="action-btn view-btn" href="{{ route('orders.showadmin', $order->id) }}"">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="6" class="text-center">Aucun order</td>
+                                </tr>
+                            @endif
                         </tbody>
+                        <div class="orders-pagination">
+                            {{ $orders->appends(request()->except('page'))->links() }}
+                        </div>
                     </table>
                 </div>
             </section>
@@ -466,6 +487,29 @@
     </div>
 
     <script>
+function filterOrders() {
+    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    const selectedStatus = document.getElementById('status-select').value;
+
+    const rows = document.querySelectorAll('.order-row');
+
+    rows.forEach(row => {
+        const orderNumber = row.dataset.orderNumber;
+        const orderStatus = row.dataset.orderStatus;
+
+        const matchesSearch = orderNumber.includes(searchTerm);
+        const matchesStatus = (selectedStatus === 'all' || orderStatus === selectedStatus);
+
+        if (matchesSearch && matchesStatus) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
+
+
         document.addEventListener('DOMContentLoaded', function() {
     // Initialize the admin dashboard
     initNavigation();
@@ -476,6 +520,7 @@
     initImageUpload();
     initViewOrderModal();
     initViewProductModal();
+    
 });
 
 // Navigation between sections
@@ -504,6 +549,8 @@ function initNavigation() {
         });
     });
 }
+
+
 
 
 

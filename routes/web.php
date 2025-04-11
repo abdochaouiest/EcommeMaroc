@@ -74,6 +74,9 @@ Route::middleware(['auth:sanctum','Isadmin'])->group(function () {//kay3ni blli 
     Route::get('/admin/dashboard/customers/{id}', [StatiqueController::class, 'getCustomerDetails'])
     ->name('admin.customers.details');
 
+    Route::get('/admin/dashboard/orders/{order}', [StatiqueController::class, 'showordersdetails'])->name('orders.showadmin');
+    Route::put('/admin/dashboard/orders/delete/{order}', [StatiqueController::class, 'cancel'])->name('orders.cancel');
+
     Route::controller(ProductController::class)->prefix('products')->group(function(){
         Route::get('','index')->name('products');
         Route::get('create','create')->name('products.create');

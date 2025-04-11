@@ -33,7 +33,7 @@
           @csrf
         <div class="form-group">
           <label for="country" class="text-black">Country <span class="text-danger">*</span></label>
-          <select id="country" class="form-control">
+          <select id="country" class="form-control" required>
             <option value="1">Select a country</option>    
             <option value="2">bangladesh</option>    
             <option value="3">Algeria</option>    
@@ -50,34 +50,34 @@
         <div class="form-group row">
           <div class="col-md-12">
             <label for="address" class="text-black">Address <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="Street address">
+            <input type="text" class="form-control" id="address" name="address" placeholder="Street address" required>
           </div>
         </div>
 
         <div class="form-group mt-3">
           <label for="type" class="text-black">Type <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="type" id="type" name="type" placeholder="Apartment, suite, unit etc. (optional)">
+          <input type="text" class="form-control" id="type" id="type" name="type" placeholder="Apartment, suite, unit etc. (optional)" required>
         </div>
 
         <div class="form-group row">
           <div class="col-md-6">
             <label for="state" class="text-black">State / Country <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="state" name="state" placeholder="State">
+            <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
           </div>
           <div class="col-md-6">
             <label for="zip" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip" >
+            <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip" required>
           </div>
         </div>
 
         <div class="form-group row mb-5">
           <div class="col-md-6">
             <label for="phone" class="text-black">Phone <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number">
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" required>
           </div>
           <div class="col-md-6">
             <label for="city" class="text-black">city <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="city" name="city" placeholder="City">
+            <input type="text" class="form-control" id="city" name="city" placeholder="City" required>
           </div>
         </div>
         
@@ -89,7 +89,7 @@
 
               <div class="form-group">
                 <label for="c_diff_country" class="text-black">Country <span class="text-danger">*</span></label>
-                <select id="c_diff_country" class="form-control">
+                <select id="c_diff_country" class="form-control" required>
                   <option value="1">Select a country</option>    
                   <option value="2">bangladesh</option>    
                   <option value="3">Algeria</option>    
@@ -108,11 +108,11 @@
               <div class="form-group row">
                 <div class="col-md-6">
                   <label for="c_diff_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_diff_fname" name="c_diff_fname">
+                  <input type="text" class="form-control" id="c_diff_fname" name="c_diff_fname" required>
                 </div>
                 <div class="col-md-6">
                   <label for="c_diff_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_diff_lname" name="c_diff_lname">
+                  <input type="text" class="form-control" id="c_diff_lname" name="c_diff_lname" required>
                 </div>
               </div>
 

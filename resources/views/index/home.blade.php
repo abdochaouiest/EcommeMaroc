@@ -172,7 +172,7 @@
 							<div class="pt-3">
 								<h3>{{ $prod->name}}</h3>
 								<p>{{$prod->description}}</p>
-								<p><a href="#">Read More</a></p>
+								<p><a href="{{ route('product.showuser', $prod->id) }}">Read More</a></p>
 							</div>
 						</div>
 					</div>
@@ -181,7 +181,6 @@
 					<div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
 						<div class="product-item-sm d-flex">
 							<div class="thumbnail">
-								<img src="{{ $prod->photo }}" alt="Image" class="img-fluid">
 							</div>
 							<div class="pt-3">
 								<h3>No products found</h3>

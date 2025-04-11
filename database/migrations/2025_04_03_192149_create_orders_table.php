@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
             $table->text('address'); 
             $table->string('city'); 
+            $table->string('phone'); 
             $table->string('state'); 
             $table->string('country'); 
             $table->string('zip'); 
