@@ -33,7 +33,7 @@
           @csrf
         <div class="form-group">
           <label for="country" class="text-black">Country <span class="text-danger">*</span></label>
-          <select id="country" class="form-control" required>
+          <select id="country" class="form-control" name="country"  required>
             <option value="1">Select a country</option>    
             <option value="2">bangladesh</option>    
             <option value="3">Algeria</option>    
@@ -56,7 +56,7 @@
 
         <div class="form-group mt-3">
           <label for="type" class="text-black">Type <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="type" id="type" name="type" placeholder="Apartment, suite, unit etc. (optional)" required>
+          <input type="text" class="form-control" id="type" name="type" placeholder="Apartment, suite, unit etc. (optional)" required>
         </div>
 
         <div class="form-group row">
@@ -108,11 +108,11 @@
               <div class="form-group row">
                 <div class="col-md-6">
                   <label for="c_diff_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_diff_fname" name="c_diff_fname" required>
+                  <input type="text" class="form-control" id="c_diff_fname" name="c_diff_fname">
                 </div>
                 <div class="col-md-6">
                   <label for="c_diff_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_diff_lname" name="c_diff_lname" required>
+                  <input type="text" class="form-control" id="c_diff_lname" name="c_diff_lname">
                 </div>
               </div>
 
@@ -216,15 +216,7 @@
               </tbody>
             </table>
 
-            <div class="border p-3 mb-3">
-                <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsecheque" role="button" aria-expanded="false" aria-controls="collapsecheque">Stripe</a></h3>
 
-                <div class="collapse" id="collapsecheque">
-                  <div class="py-2">
-                    <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                  </div>
-                </div>
-              </div>
             <div class="border p-3 mb-5">
               <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsepaypal" role="button" aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
 
@@ -236,7 +228,7 @@
             </div>
             
             <div class="form-group">
-              <button class="btn btn-black btn-lg py-3 btn-block">Place Order</button>
+              <button type="submit" class="btn btn-black btn-lg py-3 btn-block">Place Order</button>
             </div>
           </form>
 
@@ -246,7 +238,6 @@
 
     </div>
   </div>
-  <!-- </form> -->
 </div>
 </div>
 @endsection
