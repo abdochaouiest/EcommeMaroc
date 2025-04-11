@@ -32,6 +32,7 @@ class User extends Authenticatable
         'address',
         'role',
         'user_id',
+        'is_banned',
     ];
 
     /**
@@ -42,14 +43,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Get the attributes A should be cast.
      *
      * @return array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_banned' => 'boolean',
     ];
 }
