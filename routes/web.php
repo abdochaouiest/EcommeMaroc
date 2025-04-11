@@ -70,13 +70,14 @@ Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.sh
 
 });
 Route::middleware(['auth:sanctum','Isadmin'])->group(function () {//kay3ni blli khass tkoun connecté o admin bach t9der t'akhod l'accès l dashboard/admin.
-    Route::get('dashboard/admin', [StatiqueController::class, 'dashboardAdmin'])->name('dashboard.admin');
+    Route::get('/admin/dashboard', [StatiqueController::class, 'dashboardAdmin'])->name('dashboard.admin');
+    Route::get('/admin/dashboard/customers/{id}', [StatiqueController::class, 'getCustomerDetails'])
+    ->name('admin.customers.details');
 
     Route::controller(ProductController::class)->prefix('products')->group(function(){
         Route::get('','index')->name('products');
         Route::get('create','create')->name('products.create');
         Route::post('store','store')->name('products.store');
-        Route::get('show/{id}','show')->name('products.show');
         Route::get('edit/{id}', 'edit')->name('products.edit');
         Route::put('edit/{id}', 'update')->name('products.update');
         Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
