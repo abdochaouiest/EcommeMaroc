@@ -27,22 +27,19 @@ return view('index.cart', compact('cartItems', 'total'));
     
         if ($cartItem) {
             $cartItem->increment('quantity', $quantity);
-            $message = 'Product quantity updated in your cart!';
-             $messageType = 'info';
+            flash()->success('Product updated in your cart!');
         } else {
             Cart::create([
                 'user_id' => Auth::id(), 
                 'product_id' => $product->id,
                 'quantity' => $quantity
             ]);
-            $message = 'Product added to cart!';
-        $messageType = 'success'; 
+            flash()->success('Product added in your cart!');
         }
+
+        
     
-        return redirect()->back()->with([
-            'message' => $message,
-            'message_type' => $messageType
-        ]);
+        return redirect()->back();
 
     }
 

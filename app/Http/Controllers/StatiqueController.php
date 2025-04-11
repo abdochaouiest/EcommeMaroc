@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,8 +13,56 @@ use Illuminate\Support\Facades\Auth;
 class StatiqueController extends Controller
 {
     public function dashboardAdmin(){
-        return view('dashboard.admin');
+        $products = Product::all();
+        $totalProducts = Product::count();
+        $totalOrders = Order::count();
+        $totalCustomers = User::where('role', 'user')->count(); 
+        $totalRevenue = Order::sum('total');
+        $recentOrders = Order::with('user')->latest()->take(6)->get();
+        $orders = Order::all();
+        $users = User::where('role', 'user')
+        ->select([
+            'id',
+            'name',
+            'email',
+            'role',
+            'created_at'
+        ])
+        ->withCount('orders')
+        ->withSum('orders', 'total')
+        ->get();
+    
+    return view('dashboard.admindashboard', compact(
+        'products',
+        'totalProducts',
+        'totalOrders',
+        'totalCustomers',
+        'totalRevenue',
+        'recentOrders',
+        'orders',
+        'users'  
+    ));
     }
+    public function getCustomerDetails($id)
+{
+    try {
+        $customer = User::findOrFail($id, ['id', 'name','email','cin','primary_phone','additional_phone', 'created_at']);
+
+
+
+        return response()->json([  
+            'success' => true,
+            'customer' => $customer,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to load customer details',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
     public function dashboardUser(){
         $products = Product::all();
         return view('dashboard.user',compact('products'));
@@ -46,6 +96,7 @@ class StatiqueController extends Controller
     }
     public function services()
     {
-        return view('index.services');
+        $products = Product::all()->take(3);
+        return view('index.services',compact('products'));
     }
 }
