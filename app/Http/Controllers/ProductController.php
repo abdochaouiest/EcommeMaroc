@@ -20,27 +20,27 @@ class ProductController extends Controller
         return view('products.create');
     }
     public function store(ProductCreateRequest $request)
-    {   
-        try {
-            $data = $request->validated();
-            if ($request->hasFile('photo')) {
-                $fileName = time().$request->file('photo')->getClientOriginalName();
-                $path = $request->file('photo')->storeAs('images', $fileName, 'public');
-                $data['photo'] = '/storage/'.$path;
-            }
-    
-            Product::create($data);
-            
-            return redirect()->route('products')->with('success', 'Product added successfully');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to add product. Please try again.');
+{   
+    try {
+        $data = $request->validated();
+        
+        if ($request->hasFile('photo')) {
+            $fileName = time().$request->file('photo')->getClientOriginalName();
+            $path = $request->file('photo')->storeAs('images', $fileName, 'public');
+            $data['photo'] = '/storage/'.$path;
         }
-    }
 
-    public function show($id)
+        Product::create($data);
+        
+        return redirect()->route('dashboard.admin')->with('success', 'Product added successfully');
+    } catch (\Exception $e) {
+        return redirect()->route('dashboard.admin')->with('error', 'There was an issue adding the product');
+    }
+}
+    public function showUser($id)
     {
         $product = Product::findOrFail($id);
-        return view('products.show', compact('product'));
+        return view('index.productdescription', compact('product'));
     }
     public function edit($id)
     {
@@ -60,13 +60,13 @@ class ProductController extends Controller
         }
         $product->update($request->except('photo'));
         $product->save();
-        return redirect()->route('products')->with('success', 'product updated successfully');
+        return redirect()->route('dashboard.admin')->with('success', 'product updated successfully');
     }
 
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
         $product->delete();
-        return redirect()->route('products')->with('success', 'Product deleted successfully');
+        return redirect()->route('dashboard.admin')->with('success', 'Product deleted successfully');
     }
 }

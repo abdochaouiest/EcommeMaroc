@@ -10,25 +10,37 @@ use Illuminate\Support\Facades\Auth;
 class CartController extends Controller
 {
     public function index() {
-        $cartItems = Cart::with('product')->get();
+        $user = Auth::user();
+        $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
         $total = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
-        return view('index.cart', compact('cartItems', 'total'));
+
+return view('index.cart', compact('cartItems', 'total'));
     }
 
-    public function add(Product $product) {
-        $cartItem = Cart::where('user_id', Auth::id())->where('product_id', $product->id)->first(); 
+    public function add(Request $request, Product $product)
+    {
+        $quantity = (int) $request->input('quantity', 1); // Default to 1 if nothing passed
+    
+        $cartItem = Cart::where('user_id', Auth::id())
+                        ->where('product_id', $product->id)
+                        ->first(); 
     
         if ($cartItem) {
-            $cartItem->increment('quantity');
+            $cartItem->increment('quantity', $quantity);
+            flash()->success('Product updated in your cart!');
         } else {
             Cart::create([
-                'user_id' =>Auth::id(), 
+                'user_id' => Auth::id(), 
                 'product_id' => $product->id,
-                'quantity' => 1
+                'quantity' => $quantity
             ]);
+            flash()->success('Product added in your cart!');
         }
+
+        
     
-        return redirect()->route('cart.index');
+        return redirect()->back();
+
     }
 
     public function update(Request $request) {

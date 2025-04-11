@@ -42,37 +42,45 @@ Route::put('/cart/update', [CartController::class, 'update'])->name('cart.update
 Route::delete('/cart/remove/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 
+Route::get('/product/{id}', [ProductController::class, 'showUser'])->name('product.showuser');
+
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-Route::get('/payment/success-page', function () {
-    return view('payment.success');
-})->name('payment.success');
+Route::get('/paypal/success', [PayPalController::class, 'handleSuccess'])
+            ->name('paypal.success');
 
-Route::get('/payment/cancel-page', function () {
-    return view('payment.cancel');
-})->name('payment.cancel');
+Route::get('/paypal/cancel', [PayPalController::class, 'handleCancel'])
+            ->name('paypal.cancel');
+Route::get('/payment/error', function () {
+                return view('payment.error')->with('error', session('error'));
+            })->name('payment.error');
 
-Route::get('/payment/error-page', function () {
-    return view('payment.error');
-})->name('payment.error');
 
-Route::get('/payment/form', function () {
-    return view('payment.form');
-})->name('payment.form');
+Route::get('/order/confirmation/{order}', function ($order) {
+    return view('payment.orderconfirmation', [
+        'order' => $order,
+        'success' => session('success')
+    ]);
+})->name('order.confirmation');
 
 Route::post('/paypal/create', [PaypalController::class, 'createPayment'])->name('paypal.create');
 
-
+Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 
 });
 Route::middleware(['auth:sanctum','Isadmin'])->group(function () {//kay3ni blli khass tkoun connecté o admin bach t9der t'akhod l'accès l dashboard/admin.
-    Route::get('dashboard/admin', [StatiqueController::class, 'dashboardAdmin'])->name('dashboard.admin');
+    Route::get('/admin/dashboard', [StatiqueController::class, 'dashboardAdmin'])->name('dashboard.admin');
+    Route::get('/admin/dashboard/customers/{id}', [StatiqueController::class, 'getCustomerDetails'])
+    ->name('admin.customers.details');
+
+    Route::get('/admin/dashboard/orders/{order}', [StatiqueController::class, 'showordersdetails'])->name('orders.showadmin');
+    Route::put('/admin/dashboard/orders/delete/{order}', [StatiqueController::class, 'cancel'])->name('orders.cancel');
 
     Route::controller(ProductController::class)->prefix('products')->group(function(){
         Route::get('','index')->name('products');
         Route::get('create','create')->name('products.create');
         Route::post('store','store')->name('products.store');
-        Route::get('show/{id}','show')->name('products.show');
         Route::get('edit/{id}', 'edit')->name('products.edit');
         Route::put('edit/{id}', 'update')->name('products.update');
         Route::delete('destroy/{id}', 'destroy')->name('products.destroy');

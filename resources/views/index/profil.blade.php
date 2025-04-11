@@ -13,29 +13,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show mt-3 shadow-sm rounded" role="alert" id="success-alert">
-        <i class="bi bi-check-circle-fill me-2"></i>
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-
-@if(session('error'))
-    <div class="alert alert-danger alert-dismissible fade show mt-3 shadow-sm rounded" role="alert" id="error-alert">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i>
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
         <div class="hero">
             <div class="container">
                 <div class="row justify-content-between">
                     <div class="col-lg-5">
                         <div class="intro-excerpt">
                             <h1>My Profile</h1>
-                            <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-                            <p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
+                            <p class="mb-4">Welcome to your profile! Here you can view and update your personal information, check your activity, and manage settings to enhance your experience.</p>
+                            <p><a href="{{route('shop')}}" class="btn btn-secondary me-2">Shop Now</a><a href="{{route('home')}}" class="btn btn-white-outline">Explore</a></p>
                         </div>
                     </div>
                     <div class="col-lg-7">

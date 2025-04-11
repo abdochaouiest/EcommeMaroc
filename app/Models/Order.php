@@ -14,13 +14,21 @@ class Order extends Model
         'order_number',
         'status',
         'subtotal',
+        'discount',
         'shipping_cost',
         'tax',
         'total',
-        'shipping_address_id',
+        'address',
+        'city',
+        'phone',
+        'state',
+        'country',
+        'zip',
+        'type',
+        'paypal_payment_id',
         'payment_method',
         'payment_status',
-        'paypal_payment_id' 
+        'delivered_date',
     ];
 
     protected $casts = [
@@ -35,8 +43,14 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function orderItems()
+{
+    return $this->hasMany(OrderItem::class);
+}
+
+
     public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
 }
