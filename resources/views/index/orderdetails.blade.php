@@ -338,9 +338,13 @@
                 </div>
 
                 <div class="actions-container">
-                    <a class="btn back-button" href="{{route("cart.index")}}">Back to Orders</a>
+                    <a class="btn back-button" href="{{route("cart.index")}}">Back to Carts</a>
                     <button class="btn" onclick="window.print()">Print Order</button>
+                    <form method="POST" action="{{ route('orders.canceluser', $order->id) }}">
+                        @csrf
+                            @method('PUT')
                     <button class="btn" id="cancel-order-btn">Cancel Order</button>
+                </form>
                 </div>
             </div>
         </section>

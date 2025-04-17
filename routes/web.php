@@ -19,6 +19,8 @@ Route::get('aboutus', [StatiqueController::class, 'aboutUs'])->name('aboutus');
 Route::get('contactUs', [StatiqueController::class, 'contactUs'])->name('contactus');
 Route::get('services', [StatiqueController::class, 'services'])->name('services');
 Route::get('shop', [StatiqueController::class, 'shop'])->name('shop');
+Route::get('/product/{id}', [ProductController::class, 'showUser'])->name('product.showuser');
+
 
 Route::controller(AuthController::class)->group( function (){
     Route::get('register','register')->name('register');
@@ -29,7 +31,7 @@ Route::controller(AuthController::class)->group( function (){
     
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {// kay3ni blli ay wahed khaso ykoon connecté (authenticité) bach y9der ymchi l dashboard dyal user
+Route::middleware(['auth:sanctum'])->group(function () {
 
 
     Route::get('/profile', [ProfileController::class, 'show'])->name('profil.show');
@@ -42,7 +44,6 @@ Route::put('/cart/update', [CartController::class, 'update'])->name('cart.update
 Route::delete('/cart/remove/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 
-Route::get('/product/{id}', [ProductController::class, 'showUser'])->name('product.showuser');
 
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
@@ -67,6 +68,8 @@ Route::post('/paypal/create', [PaypalController::class, 'createPayment'])->name(
 
 Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+Route::put('orders/delete/{order}', [OrderController::class, 'cancel'])->name('orders.canceluser');
+
 
 });
 Route::middleware(['auth:sanctum','Isadmin'])->group(function () {//kay3ni blli khass tkoun connecté o admin bach t9der t'akhod l'accès l dashboard/admin.

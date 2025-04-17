@@ -511,7 +511,7 @@
                         </div>
                         <form method="POST" action="{{ route('orders.cancel', $order->id) }}">
                             @csrf
-                            @method('PUT')  <!-- For RESTful routes -->
+                            @method('PUT')
                             <button type="submit" class="btn btn-danger">
                                 <i class="fas fa-times-circle me-2"></i> Mark as Cancelled
                             </button>

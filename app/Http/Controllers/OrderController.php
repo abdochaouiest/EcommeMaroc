@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,5 +41,26 @@ public function show($id)
         'orderItems' => $order->items,
         'isEmpty' => $order->items->isEmpty()
     ]);
+}
+
+public function cancel($orderId)
+{
+    try{
+        $order = Order::findOrFail($orderId);
+    if ($order->status === 'cancelled') {
+        return back()->with('error', 'Order #' . $orderId . ' is already cancelled!');
+    }
+
+    if ($order->status === 'shipped') {
+        return back()->with('error', 'Cannot cancel shipped order #' . $orderId);
+    }
+    $order->update(['status' => 'cancelled']);
+
+        return back()->with('success', 'Order #' . $orderId . ' cancelled successfully!');
+
+    } catch (ModelNotFoundException $e) {
+        return back()->with('error', 'Order not found!');
+
+}
 }
 }
