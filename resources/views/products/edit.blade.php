@@ -20,7 +20,7 @@
                 @method('PUT')
                 
                 <!-- Image Upload Section -->
-                <<div class="form-section">
+                <div class="form-section">
                     <label class="section-label">Product Image</label>
                     <div class="image-upload-box @if($product->photo) has-image @endif">
                         <div class="upload-placeholder" @if($product->photo) style="display:none" @endif>
@@ -57,9 +57,14 @@
                             <select name="Category" id="product-category" 
                                     class="form-control">
                                 <option value="{{ $product->Category }}">{{ $product->Category }}</option>
-                                <option value="electronics">Electronics</option>
-                                <option value="clothing">Clothing</option>
-                                <option value="home">Home & Kitchen</option>
+                                <option value="">Select category</option>
+                                <option value="office-chairs">Office Chairs</option>
+                                <option value="ergonomic-chairs">Ergonomic Chairs</option>
+                                <option value="recliners">Recliners</option>
+                                <option value="gaming-chairs">Gaming Chairs</option>
+                                <option value="dining-chairs">Dining Chairs</option>
+                                <option value="outdoor-chairs">Outdoor Chairs</option>
+                                <option value="accent-chairs">Accent Chairs</option>
                             </select>
     
                         </div>
@@ -74,7 +79,7 @@
                             <label for="product-quantity">Quantity</label>
                             <input type="number" name="quantity" id="product-quantity" 
                                    class="form-control" 
-                                   placeholder="Available stock" required>
+                                   placeholder="Available stock" value="{{ $product->quantity }}"required>
                         </div>
                         
                         <div class="form-group">
